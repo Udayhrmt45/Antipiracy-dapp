@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react'
 
 
-const Connectbutton = () => {
+const Connectbutton = ({onAddressChange}) => {
     
   const [account, setAccount] = useState(null);
 
@@ -11,6 +11,7 @@ const Connectbutton = () => {
       try{
         const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
         setAccount(accounts[0]);
+        onAddressChange(accounts[0]);
       }catch(error){
         console.log(error);
       }
@@ -25,9 +26,10 @@ const Connectbutton = () => {
             }else{
                 setAccount(null);
             }
+            onAddressChange(accounts[0]); 
         });
         }
-    }, []);
+    }, [onAddressChange]);
 
   return (
     <div className="flex flex-col items-center mt-8">
